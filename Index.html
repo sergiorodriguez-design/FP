@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inspección Pedagógica | FPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --c-cyan: #13c9f2;
+  --c-cyan-hover: #0eb5db;
+  --c-cyan-light: rgba(19, 201, 242, 0.1);
+  --c-navy: #000f94;
+  --c-navy-hover: #000a6b;
+  --c-navy-dark: #000533;
+  --c-bg: #f4f7f9;
+  --c-surface: #ffffff;
+  --c-text-main: #1e293b;
+  --c-text-muted: #64748b;
+  --c-border: #e2e8f0;
+  --c-success: #10b981;
+  --c-error: #ef4444;
+  --c-warning: #f59e0b;
+  --r-sm: 6px;
+  --r-md: 10px;
+  --shadow-sm: 0 2px 4px rgba(0, 15, 148, 0.02);
+  --shadow-md: 0 10px 20px -5px rgba(0, 15, 148, 0.05), 0 4px 6px -2px rgba(0, 15, 148, 0.02);
+  --f-ui: 'Inter', system-ui, sans-serif;
+  --f-doc: 'Lora', Georgia, serif;
+  --f-mono: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--f-ui);
+  background: var(--c-bg);
+  color: var(--c-text-main);
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+.icon-sm { width: 16px; height: 16px; }
+.icon-lg { width: 32px; height: 32px; }
+
+.sidebar {
+  width: 320px;
+  background: var(--c-navy);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  flex-shrink: 0;
+  box-shadow: 2px 0 20px rgba(0,0,0,0.08);
+  z-index: 10;
+  position: relative;
+}
+.sidebar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.1), transparent);
+}
+.sidebar-header { padding: 2rem 1.5rem 1.5rem; }
+.brand-subtitle {
+  font-family: var(--f-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--c-cyan);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.brand-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.sidebar-body {
+  flex: 1;
+  padding: 0 1.5rem 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.sidebar-body::-webkit-scrollbar { width: 4px; }
+.sidebar-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+.sidebar-footer {
+  padding: 1.5rem;
+  background: var(--c-navy-dark);
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 0.8rem;
+}
+.sidebar-card {
+  padding: 1rem;
+  background: rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--r-md);
+}
+.sidebar-note {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.72rem;
+  margin-top: 0.55rem;
+}
+
+.workspace {
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 3rem 4rem 6rem;
+}
+.workspace::-webkit-scrollbar { width: 6px; }
+.workspace::-webkit-scrollbar-track { background: var(--c-bg); }
+.workspace::-webkit-scrollbar-thumb { background: var(--c-border); border-radius: 4px; }
+
+.header-section { margin-bottom: 2rem; }
+.title-main {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--c-navy);
+  margin-bottom: 0.3rem;
+}
+.subtitle-main { font-size: 1rem; color: var(--c-text-muted); }
+
+.input-group { margin-bottom: 1.5rem; }
+.input-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--c-text-main);
+}
+.input-field {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-sm);
+  font-family: var(--f-ui);
+  font-size: 0.95rem;
+  background: var(--c-surface);
+  transition: all 0.2s;
+  box-shadow: var(--shadow-sm);
+  color: var(--c-text-main);
+}
+.input-field:focus {
+  outline: none;
+  border-color: var(--c-cyan);
+  box-shadow: 0 0 0 3px var(--c-cyan-light);
+}
+.input-dark {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--r-sm);
+  background: rgba(0,0,0,0.22);
+  color: #fff;
+  font-size: 0.85rem;
+  font-family: var(--f-mono);
+}
+.input-dark::placeholder { color: rgba(255,255,255,0.35); }
+.input-dark:focus {
+  outline: none;
+  border-color: var(--c-cyan);
+  background: rgba(0,0,0,0.3);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--r-sm);
+  font-family: var(--f-ui);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.btn-primary { background: var(--c-navy); color: #fff; box-shadow: var(--shadow-sm); }
+.btn-primary:hover:not(:disabled) { background: var(--c-navy-hover); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn-cyan { background: var(--c-cyan); color: var(--c-navy); }
+.btn-cyan:hover:not(:disabled) { background: var(--c-cyan-hover); }
+.btn-outline { background: var(--c-surface); border: 1px solid var(--c-border); color: var(--c-text-main); }
+.btn-outline:hover:not(:disabled) { border-color: var(--c-navy); color: var(--c-navy); }
+.btn-ghost-dark {
+  background: transparent;
+  color: rgba(255,255,255,0.75);
+  padding: 7px 10px;
+  font-size: 0.8rem;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.btn-ghost-dark:hover:not(:disabled) { background: rgba(255,255,255,0.1); color: #fff; }
+.btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+
+.alert-box {
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  font-size: 0.78rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.alert-dark {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+.dropzone {
+  border: 2px dashed var(--c-border);
+  border-radius: var(--r-md);
+  background: var(--c-surface);
+  padding: 3rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+}
+.dropzone:hover, .dropzone.drag {
+  border-color: var(--c-cyan);
+  background: var(--c-cyan-light);
+}
+.dropzone input[type=file] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.dropzone-icon { color: var(--c-navy); margin-bottom: 1rem; display: inline-block; }
+.dropzone-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.3rem; }
+.dropzone-desc { font-size: 0.85rem; color: var(--c-text-muted); }
+
+.file-list { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 8px; }
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-sm);
+  font-size: 0.85rem;
+  box-shadow: var(--shadow-sm);
+}
+.file-status { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.file-name { flex: 1; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-size { font-family: var(--f-mono); font-size: 0.75rem; color: var(--c-text-muted); }
+.file-tag {
+  width: 130px;
+  padding: 6px 10px;
+  border: 1px solid var(--c-border);
+  border-radius: 4px;
+  background: var(--c-bg);
+  font-size: 0.8rem;
+  color: var(--c-text-main);
+}
+.file-tag:focus { outline: none; border-color: var(--c-cyan); }
+.file-remove {
+  color: var(--c-text-muted);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+  border-radius: 4px;
+  display: inline-flex;
+}
+.file-remove:hover { color: var(--c-error); background: rgba(239,68,68,0.1); }
+
+.console-wrapper { display: none; margin-top: 2rem; animation: slideUp 0.3s ease; }
+.console-wrapper.vis { display: block; }
+.console {
+  background: #0f172a;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.console-header {
+  background: #1e293b;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid #334155;
+}
+.console-title {
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.console-body {
+  padding: 1.2rem;
+  font-family: var(--f-mono);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  height: 200px;
+  overflow-y: auto;
+  color: #e2e8f0;
+}
+.log-line { margin-bottom: 4px; display: flex; gap: 8px; }
+.log-line.ok { color: var(--c-success); }
+.log-line.err { color: var(--c-error); }
+.log-arrow { color: var(--c-cyan); }
+
+.unit-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 8px 10px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 4px;
+  border-left: 2px solid rgba(255,255,255,0.2);
+}
+.unit-list-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.unit-list-status {
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  white-space: nowrap;
+}
+
+.summary-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 6px 12px;
+  background: #ecfdf5;
+  color: #059669;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid #a7f3d0;
+}
+.unit-card { margin-bottom: 2rem; animation: slideUp 0.4s ease; }
+.unit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.2rem 1.5rem;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s;
+}
+.unit-header:hover { border-color: var(--c-navy); box-shadow: var(--shadow-md); }
+.unit-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.unit-title { font-size: 1.1rem; font-weight: 600; color: var(--c-navy); }
+.unit-meta-line { font-family: var(--f-mono); font-size: 0.75rem; color: var(--c-text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.unit-badge {
+  background: var(--c-cyan-light);
+  color: var(--c-navy);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.unit-body { display: none; padding-top: 1.5rem; }
+.unit-body.open { display: block; }
+
+.unit-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.unit-meta-panel {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-sm);
+  padding: 1rem;
+}
+.unit-meta-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--c-navy);
+  margin-bottom: 0.6rem;
+  border-bottom: 1px solid var(--c-border);
+  padding-bottom: 4px;
+}
+.unit-meta-text {
+  font-size: 0.86rem;
+  color: var(--c-text-main);
+  white-space: pre-wrap;
+}
+
+.activity-row {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-sm);
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+.activity-hdr {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  background: #f8fafc;
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+}
+.activity-row.open .activity-hdr { border-bottom-color: var(--c-border); background: #fff; }
+.act-id {
+  font-family: var(--f-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--c-text-main);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.act-type {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.t-ap { background: #e0f2fe; color: #0284c7; }
+.t-co { background: #fff7ed; color: #c2410c; }
+.t-te { background: #f1f5f9; color: var(--c-navy); }
+.t-cp { background: #dcfce7; color: #16a34a; }
+.t-ae { background: #ecfdf5; color: #059669; }
+.t-xx { background: #f1f5f9; color: var(--c-text-muted); }
+.act-body { display: none; padding: 1.2rem; }
+.activity-row.open .act-body { display: block; }
+.act-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+.act-col-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--c-navy);
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--c-border);
+  padding-bottom: 4px;
+}
+.act-col-text {
+  font-size: 0.85rem;
+  color: var(--c-text-main);
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+.act-transcription {
+  margin-top: 1.5rem;
+  padding: 1rem 1.2rem;
+  background: var(--c-bg);
+  border-left: 3px solid var(--c-cyan);
+  font-family: var(--f-doc);
+  font-size: 0.9rem;
+  color: var(--c-text-muted);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+}
+.act-transcription-title {
+  display: block;
+  font-family: var(--f-mono);
+  font-size: 0.68rem;
+  color: var(--c-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.55rem;
+}
+.act-obs {
+  margin-top: 1.2rem;
+  padding: 10px 14px;
+  background: #fffbeb;
+  border-left: 3px solid var(--c-warning);
+  font-size: 0.85rem;
+  color: #92400e;
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+}
+
+.narrative {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: var(--c-surface);
+  border-radius: var(--r-md);
+  border-top: 4px solid var(--c-navy);
+  box-shadow: var(--shadow-sm);
+}
+.narrative-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--c-navy);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.narrative-text {
+  font-family: var(--f-doc);
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--c-text-main);
+  white-space: pre-wrap;
+}
+
+.export-panel {
+  margin-top: 3rem;
+  padding: 2.5rem;
+  background: var(--c-surface);
+  border-radius: var(--r-md);
+  text-align: center;
+  border: 1px solid var(--c-border);
+}
+.export-panel h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--c-navy);
+  margin-bottom: 0.5rem;
+}
+.export-panel p {
+  font-size: 0.9rem;
+  color: var(--c-text-muted);
+  margin-bottom: 2rem;
+}
+.export-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.exp-links {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+.exp-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--c-cyan);
+  text-decoration: none;
+  padding: 8px 16px;
+  background: var(--c-navy);
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+.exp-link:hover { background: var(--c-navy-hover); }
+.exp-link.pf-link { color: var(--c-navy); background: var(--c-cyan); }
+.exp-link.pf-link:hover { background: var(--c-cyan-hover); }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 980px) {
+  body { height: auto; min-height: 100vh; overflow: auto; flex-direction: column; }
+  .sidebar { width: 100%; height: auto; min-height: auto; }
+  .sidebar-body { overflow: visible; }
+  .workspace { height: auto; overflow: visible; padding: 2rem 1.25rem 4rem; }
+  .unit-meta-grid, .act-grid { grid-template-columns: 1fr; }
+  .file-item { flex-wrap: wrap; }
+  .file-tag { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h1 class="brand-title">Analizador<br>Pedagógico FPE</h1>
+  </div>
+
+  <div class="sidebar-body">
+    <div class="sidebar-card">
+      <div class="section-label">Plantilla PF</div>
+      <div id="plantillaMsg"></div>
+      <input type="text" class="input-dark" id="plantillaIdInput" placeholder="ID de Drive PF_plantilla.docx">
+      <div class="sidebar-note">Copia el ID de la URL de Drive, entre /d/ y /view.</div>
+      <button class="btn btn-ghost-dark" style="width:100%;margin-top:10px" onclick="guardarPlantilla()">Guardar ID plantilla</button>
+    </div>
+
+    <div id="sidebarDocs" style="display:none;opacity:0;transition:opacity 0.3s">
+      <div class="section-label">Índice Documental</div>
+      <div id="unitsStatus" style="display:flex;flex-direction:column;gap:6px"></div>
+      <div style="margin-top:1rem">
+        <button class="btn btn-cyan" style="width:100%" onclick="analizarTodo()" id="btnAnalizar" disabled>
+          <svg class="icon-sm"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Ejecutar Análisis
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="section-label">Autenticación de Servicio</div>
+    <div id="keyMsg"></div>
+    <input type="password" class="input-dark" id="apiKeyInput" placeholder="Clave OpenAI (sk-...)">
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn btn-ghost-dark" style="flex:1" onclick="guardarKey()">Vincular</button>
+      <button class="btn btn-ghost-dark" style="flex:1" onclick="verificarKey()">Verificar</button>
+    </div>
+  </div>
+</aside>
+
+<main class="workspace">
+  <div id="viewUpload">
+    <div class="header-section">
+      <h2 class="title-main">Recepción de Expedientes</h2>
+      <p class="subtitle-main">Anexe el material didáctico para su evaluación estructurada.</p>
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">Referencia del Certificado / Curso</label>
+      <input type="text" class="input-field" id="nombreCurso" placeholder="Ej. SSCE0110 - Docencia de la Formación Profesional para el Empleo">
+    </div>
+
+    <div class="dropzone" id="dropZone">
+      <input type="file" id="fileInput" accept=".pdf,.doc,.docx" multiple onchange="onFiles(this.files)">
+      <div class="dropzone-icon">
+        <svg class="icon-lg"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+      </div>
+      <div class="dropzone-title">Seleccionar o arrastrar documentos</div>
+      <div class="dropzone-desc">Formatos admitidos: PDF, DOCX. Límite: 50 MB por archivo.</div>
+    </div>
+
+    <div id="fileQueue" class="file-list"></div>
+
+    <div style="display:flex;justify-content:flex-end;margin-top:1.5rem">
+      <button class="btn btn-primary" id="btnProcesar" onclick="procesarArchivos()" disabled>
+        <svg class="icon-sm"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Procesar Documentos
+      </button>
+    </div>
+
+    <div id="upProg" class="console-wrapper">
+      <div class="console">
+        <div class="console-header">
+          <svg class="icon-sm" style="color:#94a3b8"><path d="M4 17l6-6-6-6M12 19h8"/></svg>
+          <span class="console-title" id="upLbl">Registro de extracción textual</span>
+        </div>
+        <div class="console-body" id="upLog"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="viewAnalysis" style="display:none">
+    <div class="header-section">
+      <h2 class="title-main">Evaluación Pedagógica</h2>
+      <p class="subtitle-main">El motor de inferencia está estructurando las evidencias.</p>
+    </div>
+    <div id="analProg" class="console-wrapper vis">
+      <div class="console">
+        <div class="console-header">
+          <svg class="icon-sm" style="color:var(--c-cyan)"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
+          <span class="console-title" id="analLbl">Estableciendo conexión con el servicio LLM...</span>
+        </div>
+        <div class="console-body" id="analLog"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="viewResults" style="display:none">
+    <div class="header-section">
+      <h2 class="title-main" id="tituloExpediente">Acta de Resultados</h2>
+      <div class="summary-badge" id="resumenGlobal"></div>
+    </div>
+
+    <div id="resultadosContainer"></div>
+
+    <div class="export-panel" id="exportBox" style="display:none">
+      <h3>Generación de Informes</h3>
+      <p>Exporte el dictamen en el formato estructurado de inspección académica y en la plantilla PF oficial.</p>
+      <div class="export-actions">
+        <button class="btn btn-cyan" onclick="exportPF()">
+          <svg class="icon-sm"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+          Exportar Plantilla PF
+        </button>
+        <button class="btn btn-outline" onclick="exportSheets()">
+          <svg class="icon-sm"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          Exportar Hoja de Cálculo
+        </button>
+        <button class="btn btn-primary" onclick="exportDoc()">
+          <svg class="icon-sm"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          Exportar Documento
+        </button>
+      </div>
+      <div id="expLinks" class="exp-links"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+const S = { unidades: [], resultados: [], nombreCurso: '', procesando: false };
+
+window.onload = () => {
+  if (hasGoogle()) {
+    google.script.run.withSuccessHandler(ok => {
+      if (ok) { setKeyMsg('ok', 'Servicio vinculado'); unlockWorkspace(); }
+      else setKeyMsg('info', 'Clave pendiente');
+    }).apiKeyConfigurada();
+
+    google.script.run.withSuccessHandler(ok => {
+      setPlantillaMsg(ok ? 'ok' : 'info', ok ? 'Plantilla PF configurada' : 'Pendiente de configurar');
+    }).plantillaConfigurada();
+  } else {
+    setKeyMsg('ok', 'Modo demo operativo');
+    setPlantillaMsg('info', 'Modo demo');
+    unlockWorkspace();
+  }
+
+  const dz = document.getElementById('dropZone');
+  dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag'); });
+  dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
+  dz.addEventListener('drop', e => {
+    e.preventDefault();
+    dz.classList.remove('drag');
+    if (e.dataTransfer.files.length) onFiles(e.dataTransfer.files);
+  });
+};
+
+function hasGoogle() {
+  return typeof google !== 'undefined' && google.script && google.script.run;
+}
+
+function guardarKey() {
+  const k = document.getElementById('apiKeyInput').value.trim();
+  if (!k.startsWith('sk-')) { setKeyMsg('err', 'Formato de clave no válido'); return; }
+  setKeyMsg('info', 'Guardando clave...');
+  if (hasGoogle()) {
+    google.script.run
+      .withSuccessHandler(() => {
+        setKeyMsg('ok', 'Clave almacenada');
+        unlockWorkspace();
+        document.getElementById('apiKeyInput').value = '';
+      })
+      .withFailureHandler(e => setKeyMsg('err', 'Error: ' + e.message))
+      .guardarApiKey(k);
+  } else {
+    setKeyMsg('ok', 'Clave almacenada en demo');
+    unlockWorkspace();
+  }
+}
+
+function verificarKey() {
+  if (hasGoogle()) {
+    google.script.run.withSuccessHandler(p => {
+      setKeyMsg(p ? 'ok' : 'err', p ? 'Servicio activo: ' + p : 'Servicio inactivo');
+    }).obtenerApiKey();
+  } else {
+    setKeyMsg('ok', 'Servicio activo en demo');
+  }
+}
+
+function setKeyMsg(tipo, msg) {
+  document.getElementById('keyMsg').innerHTML = renderDarkAlert(tipo, msg);
+}
+
+function guardarPlantilla() {
+  const id = document.getElementById('plantillaIdInput').value.trim();
+  if (!id) { setPlantillaMsg('err', 'Pega el ID de Drive'); return; }
+  setPlantillaMsg('info', 'Guardando plantilla...');
+  if (hasGoogle()) {
+    google.script.run
+      .withSuccessHandler(() => {
+        setPlantillaMsg('ok', 'ID guardado correctamente');
+        document.getElementById('plantillaIdInput').value = '';
+      })
+      .withFailureHandler(e => setPlantillaMsg('err', 'Error: ' + e.message))
+      .guardarPlantillaId(id);
+  } else {
+    setPlantillaMsg('ok', 'ID guardado en demo');
+  }
+}
+
+function setPlantillaMsg(tipo, msg) {
+  document.getElementById('plantillaMsg').innerHTML = renderDarkAlert(tipo, msg);
+}
+
+function renderDarkAlert(tipo, msg) {
+  const color = tipo === 'ok' ? '#10b981' : tipo === 'err' ? '#ef4444' : tipo === 'warn' ? '#f59e0b' : '#13c9f2';
+  const icon = tipo === 'ok'
+    ? '<svg class="icon-sm"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'
+    : tipo === 'err'
+      ? '<svg class="icon-sm"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>'
+      : '<svg class="icon-sm"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
+  return `<div class="alert-box alert-dark" style="color:${color}">${icon}<span>${esc(msg)}</span></div>`;
+}
+
+function unlockWorkspace() {
+  const el = document.getElementById('sidebarDocs');
+  el.style.display = 'block';
+  setTimeout(() => el.style.opacity = '1', 50);
+}
+
+function onFiles(files) {
+  Array.from(files).forEach(f => {
+    if (f.size > 50 * 1024 * 1024) { alert(f.name + ' supera 50 MB.'); return; }
+    if (S.unidades.find(u => u.nombreArchivo === f.name)) return;
+    S.unidades.push({ nombreArchivo: f.name, etiqueta: 'UNIDAD ' + (S.unidades.length + 1), texto: null, estado: 'pendiente', file: f });
+  });
+  renderQueue();
+  if (!document.getElementById('nombreCurso').value && S.unidades.length) {
+    document.getElementById('nombreCurso').value = 'Expediente FPE ' + new Date().getFullYear();
+  }
+}
+
+function renderQueue() {
+  document.getElementById('fileQueue').innerHTML = S.unidades.map((u, i) => {
+    const color = u.estado === 'ok' ? 'var(--c-success)' : u.estado === 'err' ? 'var(--c-error)' : u.estado === 'proc' ? 'var(--c-cyan)' : 'var(--c-border)';
+    return `
+      <div class="file-item">
+        <div class="file-status" style="background:${color}"></div>
+        <div style="flex:1;overflow:hidden">
+          <div class="file-name" title="${escAttr(u.nombreArchivo)}">${esc(u.nombreArchivo)}</div>
+          <div class="file-size">${(u.file.size / 1024 / 1024).toFixed(1)} MB</div>
+        </div>
+        <input type="text" class="file-tag" value="${escAttr(u.etiqueta)}" onchange="S.unidades[${i}].etiqueta=this.value" placeholder="Referencia">
+        <button class="file-remove" onclick="quitarArchivo(${i})" title="Excluir documento">
+          <svg class="icon-sm"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>`;
+  }).join('');
+  document.getElementById('btnProcesar').disabled = S.unidades.length === 0 || S.procesando;
+  document.getElementById('btnAnalizar').disabled = !S.unidades.some(u => u.estado === 'ok') || S.procesando;
+}
+
+function quitarArchivo(i) {
+  S.unidades.splice(i, 1);
+  renderQueue();
+  renderUnitStatus();
+}
+
+async function procesarArchivos() {
+  if (!S.unidades.length) return;
+  S.nombreCurso = document.getElementById('nombreCurso').value.trim() || 'Expediente FPE';
+  S.procesando = true;
+  document.getElementById('btnProcesar').disabled = true;
+
+  const prog = document.getElementById('upProg');
+  const log = document.getElementById('upLog');
+  prog.classList.add('vis');
+  log.innerHTML = '';
+  addLog(log, 'Inicializando rutina de indexacion de contenido...');
+
+  let ok = 0;
+  for (let i = 0; i < S.unidades.length; i++) {
+    const u = S.unidades[i];
+    document.getElementById('upLbl').textContent = `Extrayendo (${i + 1}/${S.unidades.length}): ${u.nombreArchivo}`;
+    u.estado = 'proc';
+    renderQueue();
+    addLog(log, 'Procesando matriz de texto: ' + u.nombreArchivo);
+
+    if (hasGoogle()) {
+      const b64 = await toBase64(u.file);
+      const res = await gCall('extraerTextoDeArchivo', b64, u.file.type || 'application/pdf', u.nombreArchivo);
+      if (res.ok) {
+        u.texto = res.texto;
+        u.estado = 'ok';
+        ok++;
+        addLog(log, `Lectura verificada. Longitud: ${Math.round(res.longitud / 1000)}k caracteres`, 'ok');
+      } else {
+        u.estado = 'err';
+        addLog(log, 'Error de lectura: ' + res.error, 'err');
+      }
+    } else {
+      await sleep(600);
+      u.texto = 'Texto demo';
+      u.estado = 'ok';
+      ok++;
+      addLog(log, 'Lectura verificada en demo', 'ok');
+    }
+    renderQueue();
+  }
+
+  document.getElementById('upLbl').textContent = `${ok}/${S.unidades.length} documentos validados`;
+  addLog(log, 'Ciclo completado.', 'ok');
+  S.procesando = false;
+  renderQueue();
+  if (ok > 0) {
+    document.getElementById('btnAnalizar').disabled = false;
+    renderUnitStatus();
+  }
+}
+
+function renderUnitStatus() {
+  document.getElementById('unitsStatus').innerHTML = S.unidades.map((u, i) => {
+    const color = u.estado === 'ok' ? '#10b981' : u.estado === 'proc' ? '#13c9f2' : u.estado === 'err' ? '#ef4444' : 'rgba(255,255,255,0.35)';
+    const label = u.estado === 'ok' ? 'Verificado' : u.estado === 'proc' ? 'Procesando' : u.estado === 'err' ? 'Alerta' : 'Pendiente';
+    return `
+      <div class="unit-list-item" style="border-left-color:${color}">
+        <span class="unit-list-name" title="${escAttr(u.etiqueta)}">${esc(u.etiqueta)}</span>
+        <span class="unit-list-status" id="ust-${i}" style="color:${color}">${label}</span>
+      </div>`;
+  }).join('');
+}
+
+async function analizarTodo() {
+  const validas = S.unidades.filter(u => u.estado === 'ok');
+  if (!validas.length) return;
+
+  document.getElementById('btnAnalizar').disabled = true;
+  S.resultados = [];
+  document.getElementById('viewUpload').style.display = 'none';
+  document.getElementById('viewAnalysis').style.display = 'block';
+
+  const log = document.getElementById('analLog');
+  log.innerHTML = '';
+  addLog(log, 'Iniciando conexion con modelo de lenguaje...');
+
+  for (let i = 0; i < S.unidades.length; i++) {
+    const u = S.unidades[i];
+    if (u.estado !== 'ok') continue;
+
+    document.getElementById('analLbl').textContent = `Evaluando estructura: ${u.etiqueta}`;
+    const uel = document.getElementById('ust-' + i);
+    if (uel) { uel.textContent = 'Analizando'; uel.style.color = 'var(--c-cyan)'; }
+    addLog(log, 'Extrayendo matriz de actividades: ' + u.etiqueta);
+
+    if (hasGoogle()) {
+      const res = await gCall('analizarUnidad', u.texto, { etiqueta: u.etiqueta, nombreArchivo: u.nombreArchivo });
+      if (res.ok) {
+        S.resultados.push(res);
+        if (uel) { uel.textContent = res.total + ' Reg.'; uel.style.color = '#10b981'; }
+        addLog(log, `Mapeo completado. Registros encontrados: ${res.total}`, 'ok');
+      } else {
+        if (uel) { uel.textContent = 'Fallo'; uel.style.color = '#ef4444'; }
+        addLog(log, 'Excepcion durante inferencia: ' + res.error, 'err');
+      }
+    } else {
+      await sleep(900);
+      S.resultados.push({
+        infoUnidad: { etiqueta: u.etiqueta, nombreArchivo: u.nombreArchivo },
+        objetivos_y_criterios: 'C1: Analizar la normativa FPE.\nCE1.1 Identificar la normativa presencial y en linea.\nCE1.2 Extraer las caracteristicas de la formacion.',
+        contenidos: 'Unidad demo\n- Sistema Nacional de Cualificaciones\n- Programas formativos\n- FP reglada',
+        ejercicios: [
+          { identificador: 'Actividad de Aprendizaje 1', tipo: 'Actividad de Aprendizaje', texto_completo: 'El alumnado partiendo de un supuesto practico determinara el caso mas adecuado. Correccion automatica con feedback.', objetivos_y_criterios: 'C1: ...\nCE1.1 ...', contenidos: 'Unidad demo...', estrategias_actividades_recursos: 'Vinculada a C1, CE1.1. Supuesto practico con correccion automatica y feedback inmediato.', observaciones: '' },
+          { identificador: 'Actividad Colaborativa 1', tipo: 'Actividad Colaborativa', texto_completo: 'El alumnado identificara los motivos del desajuste formacion/empleo. A traves del foro compartiran conclusiones.', objetivos_y_criterios: 'C1: ...\nCE1.2 ...', contenidos: 'Unidad demo...', estrategias_actividades_recursos: 'Vinculada a C1, CE1.2. Aprendizaje colaborativo por foro.', observaciones: '' }
+        ],
+        analisis: 'Analisis demo de la unidad. La unidad presenta una distribucion equilibrada de actividades...',
+        total: 2
+      });
+      if (uel) { uel.textContent = '2 Reg.'; uel.style.color = '#10b981'; }
+      addLog(log, 'Mapeo completado en demo.', 'ok');
+    }
+  }
+
+  addLog(log, 'Compilando informe tecnico...', 'ok');
+  setTimeout(mostrarResultados, 500);
+}
+
+function mostrarResultados() {
+  document.getElementById('viewAnalysis').style.display = 'none';
+  document.getElementById('viewResults').style.display = 'block';
+  document.getElementById('btnAnalizar').innerHTML = '<svg class="icon-sm"><polyline points="20 6 9 17 4 12"/></svg> Análisis Finalizado';
+
+  const tot = S.resultados.reduce((s, r) => s + r.ejercicios.length, 0);
+  document.getElementById('tituloExpediente').textContent = S.nombreCurso;
+  document.getElementById('resumenGlobal').innerHTML =
+    `<svg class="icon-sm"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Resultado: ${S.resultados.length} documentos procesados, ${tot} evidencias registradas.`;
+
+  const cont = document.getElementById('resultadosContainer');
+  cont.innerHTML = '';
+
+  S.resultados.forEach((r, ri) => {
+    const block = document.createElement('div');
+    block.className = 'unit-card';
+    block.innerHTML = `
+      <div class="unit-header" onclick="toggleRes(${ri})">
+        <div class="unit-info">
+          <div class="unit-title">${esc(r.infoUnidad.etiqueta)}</div>
+          <div class="unit-meta-line">${esc(r.infoUnidad.nombreArchivo)}</div>
+        </div>
+        <div class="unit-badge">${r.ejercicios.length} Registros</div>
+      </div>
+      <div class="unit-body" id="rb-${ri}">
+        ${r.objetivos_y_criterios || r.contenidos ? `
+          <div class="unit-meta-grid">
+            <div class="unit-meta-panel">
+              <div class="unit-meta-title">Objetivos específicos / Criterios</div>
+              <div class="unit-meta-text">${esc(r.objetivos_y_criterios || '-')}</div>
+            </div>
+            <div class="unit-meta-panel">
+              <div class="unit-meta-title">Mapa de contenidos</div>
+              <div class="unit-meta-text">${esc(r.contenidos || '-')}</div>
+            </div>
+          </div>` : ''}
+        ${buildGrid(r.ejercicios, ri)}
+        <div class="narrative">
+          <div class="narrative-title">Analisis Curricular</div>
+          <div class="narrative-text">${fmtNarrativo(r.analisis)}</div>
+        </div>
+      </div>`;
+    cont.appendChild(block);
+  });
+
+  if (S.resultados.length) toggleRes(0);
+  document.getElementById('exportBox').style.display = 'block';
+}
+
+function buildGrid(ejercicios, ri) {
+  if (!ejercicios.length) return '<p style="color:var(--c-text-muted);font-size:0.9rem">No se detectaron registros evaluables en el documento.</p>';
+  return ejercicios.map((ej, ei) => `
+    <div class="activity-row" id="actc-${ri}-${ei}">
+      <div class="activity-hdr" onclick="toggleEj(${ri},${ei})">
+        <span class="act-id">${esc(ej.identificador || 'Registro ' + (ei + 1))}</span>
+        <span class="act-type ${tipoClass(ej.tipo)}">${esc(ej.tipo || 'Indefinido')}</span>
+        <svg class="icon-sm" style="color:var(--c-navy);margin-left:auto"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="act-body">
+        <div class="act-grid">
+          <div>
+            <div class="act-col-title">Objetivos / Criterios</div>
+            <div class="act-col-text">${esc(ej.objetivos_y_criterios || '-')}</div>
+          </div>
+          <div>
+            <div class="act-col-title">Contenidos asociados</div>
+            <div class="act-col-text">${esc(ej.contenidos || '-')}</div>
+          </div>
+          <div>
+            <div class="act-col-title">Desarrollo metodológico</div>
+            <div class="act-col-text">${esc(ej.estrategias_actividades_recursos || '-')}</div>
+          </div>
+        </div>
+        ${ej.texto_completo ? `<div class="act-transcription"><span class="act-transcription-title">Transcripción literal</span>${esc(ej.texto_completo)}</div>` : ''}
+        ${ej.observaciones ? `<div class="act-obs"><strong>Observación técnica:</strong> ${esc(ej.observaciones)}</div>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+function tipoClass(t) {
+  if (!t) return 't-xx';
+  if (t.includes('Aprendizaje')) return 't-ap';
+  if (t.includes('Colaborativa')) return 't-co';
+  if (t.includes('Evaluacion') || t.includes('Evaluación') || t.includes('Test')) return 't-te';
+  if (t.includes('Practico') || t.includes('Práctico') || t.includes('Supuesto')) return 't-cp';
+  if (t.includes('Autoevaluacion') || t.includes('Autoevaluación') || t.includes('Repaso')) return 't-ae';
+  return 't-xx';
+}
+
+function toggleRes(ri) {
+  document.getElementById('rb-' + ri).classList.toggle('open');
+}
+
+function toggleEj(ri, ei) {
+  document.getElementById('actc-' + ri + '-' + ei).classList.toggle('open');
+}
+
+function fmtNarrativo(t) {
+  return esc(t || '').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+}
+
+function exportPF() {
+  executeExport('exportarAPF', 'Abrir Plantilla PF (Anexo IV)', getEventButton(), true);
+}
+
+function exportSheets() {
+  executeExport('exportarASheets', 'Abrir Hoja de Cálculo', getEventButton(), false);
+}
+
+function exportDoc() {
+  executeExport('exportarADoc', 'Abrir Documento', getEventButton(), false);
+}
+
+function executeExport(fnName, labelText, btnElement, isPF) {
+  const b = btnElement || document.activeElement;
+  const orig = b ? b.innerHTML : '';
+  if (b) { b.disabled = true; b.textContent = 'Procesando exportación...'; }
+
+  if (hasGoogle()) {
+    google.script.run
+      .withSuccessHandler(r => {
+        if (b) { b.disabled = false; b.innerHTML = orig; }
+        if (r.ok) addExpLink(labelText, r.url, isPF);
+        else alert('Error: ' + r.error);
+      })
+      .withFailureHandler(e => {
+        if (b) { b.disabled = false; b.innerHTML = orig; }
+        alert(e.message);
+      })[fnName](S.nombreCurso, S.resultados);
+  } else {
+    setTimeout(() => {
+      if (b) { b.disabled = false; b.innerHTML = orig; }
+      addExpLink(labelText, '#', isPF);
+    }, 700);
+  }
+}
+
+function getEventButton() {
+  return typeof event !== 'undefined' && event && event.currentTarget ? event.currentTarget : document.activeElement;
+}
+
+function addExpLink(label, url, isPF) {
+  const a = document.createElement('a');
+  a.href = url;
+  a.target = '_blank';
+  a.className = 'exp-link' + (isPF ? ' pf-link' : '');
+  a.innerHTML = `<svg class="icon-sm"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> ${esc(label)}`;
+  document.getElementById('expLinks').appendChild(a);
+}
+
+function addLog(el, msg, cls) {
+  const d = document.createElement('div');
+  d.className = 'log-line ' + (cls || '');
+  d.innerHTML = `<span class="log-arrow">></span><span>${esc(msg)}</span>`;
+  el.appendChild(d);
+  el.scrollTop = el.scrollHeight;
+}
+
+function toBase64(file) {
+  return new Promise(res => {
+    const r = new FileReader();
+    r.onload = e => res(e.target.result.split(',')[1]);
+    r.readAsDataURL(file);
+  });
+}
+
+function gCall(fn, ...args) {
+  return new Promise(resolve => {
+    google.script.run.withSuccessHandler(resolve).withFailureHandler(e => resolve({ ok: false, error: e.message }))[fn](...args);
+  });
+}
+
+function sleep(ms) {
+  return new Promise(r => setTimeout(r, ms));
+}
+
+function esc(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function escAttr(value) {
+  return esc(value);
+}
+</script>
+</body>
+</html>
